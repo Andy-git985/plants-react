@@ -8,6 +8,7 @@ const middleware = require('./utils/middleware');
 const logger = require('./utils/logger');
 const mongoose = require('mongoose');
 const itemsRouter = require('./controllers/item');
+const registerRouter = require('./controllers/register');
 
 logger.info('connecting to', config.MONGODB_URI);
 mongoose.set('strictQuery', false);
@@ -26,6 +27,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(middleware.requestLogger);
 
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing');
+  app.use('/api/testing', testingRouter);
+}
+
+// routes
 app.use('/api', itemsRouter);
+app.use('/register', registerRouter);
 
 module.exports = app;

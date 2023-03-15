@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  refreshToken: {
+    type: String,
+  },
 });
 
 userSchema.set('toJSON', {
